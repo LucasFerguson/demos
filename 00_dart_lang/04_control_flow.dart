@@ -9,7 +9,6 @@
 
 import 'dart:math';
 
-
 void main() {
   loops();
   branches();
@@ -25,7 +24,6 @@ void loops() {
     print(i);
   }
 
-
   // while loop
   print('\nwhile loop:');
   int i = 0;
@@ -34,7 +32,6 @@ void loops() {
     i++;
   }
 
-
   // do-while loop
   print('\ndo-while loop:');
   i = 0;
@@ -42,7 +39,6 @@ void loops() {
     print(i);
     i++;
   } while (i < 5);
-
 
   // for-in loop
   print('\nfor-in loop:');
@@ -66,12 +62,14 @@ void branches() {
     print('x == 5');
   }
 
-
   // switch-case
   print('\nswitch-case:');
   final score = Random().nextInt(100);
   print('score = $score');
-  switch(score) {
+
+  // we will probable want to use switch-case instead of if-else
+
+  switch (score) {
     case 100:
       print('Perfect score!');
       break;
@@ -94,9 +92,8 @@ void branches() {
       print('Invalid score!');
   }
 
-
   // switch-case as expression
-  String? grade = switch(score) {
+  String? grade = switch (score) {
     100 || >= 90 => 'A',
     >= 80 => 'B',
     >= 70 => 'C',
@@ -104,24 +101,25 @@ void branches() {
     < 60 && >= 0 => 'E',
     _ => null, // catch-all case
   };
+
+  // these are expressions that evealuate to a value in this case a String
+  // they can be put in fun places like in a List
+
   print('grade = $grade');
 }
-
 
 /*****************************************************************************/
 
 void patterns() {
-  (int,int) point1 = (1, 2);
+  (int, int) point1 = (1, 2);
 
   ({int x, int y}) point2 = (x: 3, y: 4);
 
   List<int> point3 = [5, 6];
 
-  Map<String,int> point4 = {'x': 7, 'y': 8};
-
+  Map<String, int> point4 = {'x': 7, 'y': 8};
 
   var p = point4; // try different values for `p`
-
 
   // switch pattern-matching
   switch (p) {
@@ -140,22 +138,24 @@ void patterns() {
     default:
       print("Can't decode p");
   }
-
+  // this gave me flash backs to the CS440 and Racket where I made a compiler I think.. or was it a parser?
+  // yes! it was a parser for Racket language
+  // This seems very useful for parsing data from an API or a file
 
   // if-case pattern matching
   if (p case [int x, int y]) {
     print('p is a list of ints!');
   }
 
-
   // pattern matching return values
-  var (x,y) = vectorAdd((1, 2), (3, 4));
+  var (x, y) = vectorAdd((1, 2), (3, 4));
   print('x = $x, y = $y');
+
+  // neat
 }
 
-
-(int,int) vectorAdd((int,int) v1, (int,int) v2) {
-  var (x1,y1) = v1;
-  var (x2,y2) = v2;
+(int, int) vectorAdd((int, int) v1, (int, int) v2) {
+  var (x1, y1) = v1;
+  var (x2, y2) = v2;
   return (x1 + x2, y1 + y2);
 }

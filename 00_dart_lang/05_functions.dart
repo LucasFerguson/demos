@@ -12,9 +12,9 @@ import 'dart:io';
 import 'dart:math';
 
 void main() {
-  parameterOptions();
-  anonymousFunctions();
-  hofs();
+  // parameterOptions();
+  // anonymousFunctions();
+  // hofs();
   lexicalScoping();
 }
 
@@ -26,11 +26,13 @@ void parameterOptions() {
   printCharacterSheet('Alice', 1000, 'Fireball');
   printCharacterSheet2(name: 'Bob');
   printCharacterSheet2(name: 'Tom', hp: 50);
+  // named parameters can be in any order
   printCharacterSheet2(name: 'Alice', ability: 'Fireball', hp: 1000);
 }
 
-
-void printCharacterSheet(String name, [int hp=100, String? ability]) {
+// brackets mean optional function parameters
+// default values can be assigned to optional parameters, in this case hp = 100 and ability = null
+void printCharacterSheet(String name, [int hp = 100, String? ability]) {
   print('Name: $name');
   print('HP: $hp');
   if (ability != null) {
@@ -38,10 +40,12 @@ void printCharacterSheet(String name, [int hp=100, String? ability]) {
   }
 }
 
-
+// wait i am a bit lost
+// are things wraped in curly braces a map or a record or a tuple?
+// i think becase this syntex is almost javascript i get confused
 void printCharacterSheet2({
   required String name,
-  int hp=100,
+  int hp = 100,
   String? ability,
 }) {
   print('Name: $name');
@@ -53,10 +57,11 @@ void printCharacterSheet2({
 
 /*****************************************************************************/
 
+// these are the cool anonymous functions - Lee
+
 int foo(int x) {
   return x * 2;
 }
-
 
 void anonymousFunctions() {
   int Function(int) fn1 = foo;
@@ -67,13 +72,16 @@ void anonymousFunctions() {
   print('fn1(5) = ${fn1(5)}');
   print('fn2(5) = ${fn2(5)}');
 
-  var fn3 = (int x) => x * 2;
+  var fn3 = (int x) => x * 2; // Arrow syntax!!!
+  // This is Lambda notation! - Lee    Python ex: lambda x: x * 2
+  // we call a function without a name an anonymous function
 
   var fn4 = (int x) {
     x *= 2;
     return x;
   };
 
+  // anonymous functions with named parameters
   var fn5 = ({required int x}) => x * 2;
 
   print('fn3(5) = ${fn3(5)}');
@@ -83,7 +91,11 @@ void anonymousFunctions() {
 
 /*****************************************************************************/
 
-List<E> map<E,T>(List<T> list, E Function(T) f) {
+// notes:
+// map is a function that take a list of Ts and a function that takes a T and returns an E
+// map returns a list of Es
+// What are E and T?
+List<E> map<E, T>(List<T> list, E Function(T) f) {
   // note: `E Function(T) f` is the same as `E f(T)`
   final result = <E>[];
   for (final item in list) {
@@ -92,7 +104,8 @@ List<E> map<E,T>(List<T> list, E Function(T) f) {
   return result;
 }
 
-
+// notes:
+// fliter takes a list and a function that determines if an element should be included in the list
 List<E> filter<E>(List<E> list, bool Function(E) pred) {
   // note: `bool Function(E) pred` is the same as `bool pred(E)`
   final result = <E>[];
@@ -104,41 +117,40 @@ List<E> filter<E>(List<E> list, bool Function(E) pred) {
   return result;
 }
 
+// now we really in CS440 land
 void hofs() {
   const list = ['dart', 'is', 'a', 'semi-cool', 'language'];
 
-
+  // map!
   final pairs = map(list, (s) => (s.length, s));
   print(pairs);
 
-
+  // filter!
   final filtered = filter(pairs, (pair) => pair.$1 > 5);
   print(filtered);
 
-
-  list.map((s) => (s.length, s))
+  // chaining map and filter
+  list
+      .map((s) => (s.length, s))
       .where((pair) => pair.$1 > 5)
       .forEach((element) => print(element));
 
-
-  var grades = <String, List<double>> {
+  var grades = <String, List<double>>{
     'Alice': [90, 100, 95],
     'Bob': [90, 80, 85],
     'Carol': [70, 75, 80],
     'David': [60, 70, 65],
   };
 
-
   grades.forEach((name, scores) {
     final maxScore = scores.reduce(max);
     print('$name: $maxScore');
   });
 
-
   var genItems = List.generate(10, (index) => 'Item $index');
   print(genItems);
-  
 
+  // Http requests chained with .then
   HttpClient()
       .getUrl(Uri.parse('https://moss.cs.iit.edu/cs442'))
       .then((request) => request.close())
@@ -149,13 +161,15 @@ void hofs() {
 
 /*****************************************************************************/
 
+// Lexical scoping is the concept that a function can access variables from its parent scope
 Function makeAdder() {
   int x = Random().nextInt(100);
   print('Made adder with x = $x');
   return (int y) => x + y;
 }
 
-
+// do all languages have lexical scoping?
+// no, some languages have dynamic scoping
 void lexicalScoping() {
   final adder = makeAdder();
   print(adder(10));

@@ -54,14 +54,15 @@ void strings() {
   // Removing whitespace from the beginning and end
   String spacedMessage = '  Some spaced message   ';
   String trimmedMessage = spacedMessage.trim();
-  print('Trimmed message: "$trimmedMessage"'); // Output: Trimmed message: "Some spaced message"
+  print(
+      'Trimmed message: "$trimmedMessage"'); // Output: Trimmed message: "Some spaced message"
 }
 
 /*****************************************************************************/
 
 void records() {
-  (double,double)        point1 = (3.14, 2.71);
-  (double x, double y)   point2 = (3, 2);
+  (double, double) point1 = (3.14, 2.71);
+  (double x, double y) point2 = (3, 2);
   ({double x, double y}) point3 = (x: 3, y: 2);
   ({double w, double z}) point4 = (w: 4, z: 3);
 
@@ -102,7 +103,7 @@ void collections() {
   print('List length: ${colors.length}');
 
   var moreColors = ['orange', 'purple'];
-  var allColors = [...colors, ...moreColors];
+  var allColors = [...colors, ...moreColors]; // Spread operator
   print('All colors: $allColors');
 
   // Sets
@@ -111,7 +112,7 @@ void collections() {
 
   numbers.add(3); // Adding a duplicate value
   print('Set after adding duplicate: $numbers');
-  
+
   numbers.remove(2);
   print('Set after removing 2: $numbers');
   print('Set contains 5: ${numbers.contains(5)}');
@@ -121,7 +122,17 @@ void collections() {
     'Alice': 30,
     'Bob': 25,
     'Carol': 28,
+  }; // Map literal syntax (key-value pairs)
+
+  // this is equivalent to: ages
+  var ages2 = <String, int>{
+    'Alice': 30,
+    'Bob': 25,
+    'Carol': 28,
   };
+
+  var dynamicMap = {}; // this creates a Map<dynamic, dynamic>
+
   print('\nMap: $ages');
   ages['David'] = 22;
   print('Map after adding David: $ages');
@@ -142,12 +153,25 @@ void collections() {
   for (final entry in ages.entries) {
     print('${entry.key} is ${entry.value} years old');
   }
+  // each entry is a tuple / record with type <String, int>
+  // ohh entries is a getter that returns an iterable of the ages map
 
   // Collections of collections ...
   var matrix = <List<int>>[
     [1, 2, 3],
     [4, 5, 6],
   ];
+
+  // cats list
+  var cats = <Map<String, String, Int>>[
+    {'name': 'Whiskers', 'age': 3},
+    {'name': 'Fluffy', 'age': 2},
+  ];
+  // i need to fix the above line
+  var cats = <Map<String, dynamic>>[
+    {'name': 'Whiskers', 'age': 3},
+    {'name': 'Fluffy', 'age': 2},
+  ]; // ????
 
   for (final row in matrix) {
     for (final element in row) {

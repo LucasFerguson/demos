@@ -2,7 +2,7 @@ import 'dart:async';
 
 void main() {
   print('main() started');
-  switch(1) {
+  switch (1) {
     case 1:
       asyncFunction1a();
       break;
@@ -28,7 +28,6 @@ void main() {
   }
   print('main() finishing');
 }
-
 
 // obtain a future and runs a handler on its completion
 void asyncFunction1a() {
@@ -66,8 +65,9 @@ void asyncFunction3a() {
   Future<int> future = Future<int>.delayed(Duration(seconds: 2), () {
     throw Exception('Error in asyncFunction3a()');
   });
-  future.then((result) => print('Future resolved with result: $result'))
-        .catchError((error) => print('Future failed with error: $error'));
+  future
+      .then((result) => print('Future resolved with result: $result'))
+      .catchError((error) => print('Future failed with error: $error'));
   print('asyncFunction3a() finishing');
 }
 
